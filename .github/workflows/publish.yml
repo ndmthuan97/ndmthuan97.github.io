@@ -25,23 +25,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Setup Node.js
+      # Setup Node.js 24
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '24'
 
       # Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Build Angular app with correct base-href
+      # Build Angular app
       - name: Build Angular app
-        run: npm run build -- --configuration production --base-href /repo-name/
+        run: |
+          # Lấy tên project Angular từ angular.json
+          PROJECT_NAME=$(node -p "require('./angular.json').defaultProject")
+          echo "Project name: $PROJECT_NAME"
 
-      # Copy index.html to 404.html to fix SPA 404 issues
-      - name: Copy index.html to 404.html
-        run: cp dist/CV/index.html dist/CV/404.html
+          # Build production với base-href đúng
+          ng build --configuration production --base-href /$GITHUB_REPOSITORY/
+
+          # Copy index.html → 404.html để SPA reload không bị 404
+          cp dist/$PROJECT_NAME/index.html dist/$PROJECT_NAME/404.html
 
       # Setup GitHub Pages
       - name: Setup Pages
@@ -51,7 +56,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist/CV'
+          path: dist/$PROJECT_NAME
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
