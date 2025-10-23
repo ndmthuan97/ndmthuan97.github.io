@@ -29,23 +29,25 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Chọn version Node.js phù hợp với Angular
+          node-version: '20'
 
       # Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Build Angular app
+      # Build Angular app with correct base-href
       - name: Build Angular app
-        run: npm run build --prod
-        # Mặc định Angular build ra dist/<project-name>
-        # Nếu bạn dùng Angular 15+, lệnh vẫn tương tự
+        run: npm run build -- --configuration production --base-href /repo-name/
+
+      # Copy index.html to 404.html to fix SPA 404 issues
+      - name: Copy index.html to 404.html
+        run: cp dist/CV/index.html dist/CV/404.html
 
       # Setup GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # Upload artifact (chỉ upload thư mục dist/<project-name>)
+      # Upload artifact (chỉ upload thư mục build)
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
