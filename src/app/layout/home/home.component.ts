@@ -5,6 +5,7 @@ import { SocialComponent } from "./social/social.component";
     selector: 'home-component',
     standalone: true,
     templateUrl: './home.component.html',
+    styleUrl: './home.component.css',
     imports: [SocialComponent],
 })
 

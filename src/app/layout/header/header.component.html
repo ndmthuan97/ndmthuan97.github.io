@@ -127,21 +127,34 @@
         </li>
       </ul>
     </div>
-    <button
-      class="relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden"
-      type="button"
-    >
-      <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+    <div id="dropdownMenu" class="relative lg:hidden">
+      <button
+        (click)="toggleDropdown()"
+        class="relative ml-auto h-6 w-6 rounded-lg focus:outline-none"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-6 h-6 text-slate-700"
           fill="none"
           stroke="currentColor"
           stroke-width="2"
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
-      </span>
-    </button>
+      </button>
+
+      <div
+        [class.hidden]="!isOpen"
+        class="absolute right-0 mt-3 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44"
+      >
+        <ul class="py-2 text-sm text-gray-700">
+          <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">About</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Skills</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Projects</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Qualifications</a></li>
+          <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Contact</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </nav>
