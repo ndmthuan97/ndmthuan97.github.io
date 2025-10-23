@@ -1,11 +1,9 @@
-import { NgClass } from "@angular/common";
 import { Component, HostListener } from "@angular/core";
 
 @Component({
   selector: 'header-component',
   standalone: true,
   templateUrl: './header.component.html',
-  imports: [NgClass],
 })
 
 export class HeaderComponent {
