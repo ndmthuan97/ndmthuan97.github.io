@@ -1,0 +1,29 @@
+{
+    "navItems": [
+        {
+            "icon": "Home",
+            "label": "Home",
+            "href": "home"
+        },
+        {
+            "icon": "User",
+            "label": "About",
+            "href": "about"
+        },
+        {
+            "icon": "Wrench",
+            "label": "Skills",
+            "href": "skills"
+        },
+        {
+            "icon": "Briefcase",
+            "label": "Portfolio",
+            "href": "portfolio"
+        },
+        {
+            "icon": "Mail",
+            "label": "Contact",
+            "href": "contact"
+        }
+    ]
+}

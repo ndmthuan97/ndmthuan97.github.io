@@ -1,0 +1,36 @@
+{
+    "intro": {
+        "title": "Let's Work Together!",
+        "description": "I'm currently available for freelance projects and open to new opportunities. If you have a project in mind or just want to say hi, feel free to contact me!"
+    },
+    "contacts": [
+        {
+            "id": "email",
+            "icon": "Mail",
+            "label": "Email",
+            "value": "ndmthuan97@gmail.com",
+            "href": "mailto:ndmthuan.97@gmail.com"
+        },
+        {
+            "id": "linkedin",
+            "icon": "Linkedin",
+            "label": "LinkedIn",
+            "value": "Connect on LinkedIn",
+            "href": "https://www.linkedin.com/in/thuan-nguyen-duc-minh-7045b3184/"
+        },
+        {
+            "id": "github",
+            "icon": "Github",
+            "label": "GitHub",
+            "value": "Follow on GitHub",
+            "href": "https://github.com/ndmthuan97"
+        },
+        {
+            "id": "location",
+            "icon": "MapPin",
+            "label": "Location",
+            "value": "Gia Lai, Vietnam",
+            "href": null
+        }
+    ]
+}

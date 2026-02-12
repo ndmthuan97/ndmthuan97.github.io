@@ -1,34 +1,26 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { HeroSection } from './components/home-section'
+import { AboutSection } from './components/about-section'
+import { SkillsSection } from './components/skills-section'
+import { ContactSection } from './components/contact-section'
+import { PortfolioSection } from './components/portfolio-section'
+import { SideNav } from './components/side-nav'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeSection, setActiveSection] = useState('home');
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className='text-red-500'>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="bg-background text-foreground min-h-screen">
+      <SideNav activeSection={activeSection} onNavigate={setActiveSection} />
+      <main className="pt-20 lg:pt-0">
+        {activeSection === 'home' && <HeroSection onNavigate={setActiveSection} />}
+        {activeSection === 'about' && <AboutSection />}
+        {activeSection === 'skills' && <SkillsSection />}
+        {activeSection === 'portfolio' && <PortfolioSection />}
+        {activeSection === 'contact' && <ContactSection />}
+      </main>
+    </div>
   )
 }
 

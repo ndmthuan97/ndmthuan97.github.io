@@ -1,0 +1,47 @@
+{
+    "stats": [
+        {
+            "value": "2",
+            "label": "YEARS OF EXPERIENCE"
+        },
+        {
+            "value": "5",
+            "label": "COMPLETED PROJECTS"
+        },
+        {
+            "value": "100",
+            "label": "HAPPY CUSTOMERS"
+        },
+        {
+            "value": "24/7",
+            "label": "AVAILABLE"
+        }
+    ],
+    "personalInfo": [
+        {
+            "label": "Full Name:",
+            "value": "Nguyễn Đào Minh Thuận"
+        },
+        {
+            "label": "Freelance:",
+            "value": "Available",
+            "highlight": true
+        },
+        {
+            "label": "Phone:",
+            "value": "+84385908264"
+        },
+        {
+            "label": "Email:",
+            "value": "ndmthuan.97@mail.com"
+        },
+        {
+            "label": "Languages:",
+            "value": "Vietnamese, English"
+        },
+        {
+            "label": "Address:",
+            "value": "Tup Phuoc Tay, Gia Lai, Vietnam"
+        }
+    ]
+}

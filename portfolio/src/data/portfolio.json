@@ -1,0 +1,94 @@
+{
+    "filters": [
+        {
+            "label": "ALL",
+            "value": "all"
+        },
+        {
+            "label": "BACKEND",
+            "value": "backend"
+        },
+        {
+            "label": "FRONTEND",
+            "value": "frontend"
+        },
+        {
+            "label": "MOBILE",
+            "value": "mobile"
+        }
+    ],
+    "items": [
+        {
+            "id": 1,
+            "image": "./public/images/portfolio/trava.png",
+            "title": "Trava Project",
+            "description": "Trava - Task Management and Team Collaboration System\n\nRole: Backend + Frontend Developer - Team Size: 1 member\n\nBackend:\n- Built RESTful APIs using .NET 8, designed with Clean Architecture and CQRS (MediatR)\n- Implemented JWT Authentication and role-based authorization\n- Integrated PostgreSQL (EF Core) and Redis caching\n- Applied Repository Pattern, Unit of Work, and Rate Limiting\n- Documented APIs with Swagger/OpenAPI\n\nFrontend:\n- Developed SPA using Angular\n- Designed responsive UI with TailwindCSS and PrimeNG\n- Integrated APIs and handled Authentication, Guards, and HTTP Interceptors\n- Built interfaces for managing Spaces, Tasks, Assignments, and Notifications\n\nTech Stack: .NET 8, EF Core, PostgreSQL, Redis, Azure, Angular, TailwindCSS, PrimeNG, Vercel, JWT",
+            "links": [
+                {
+                    "label": "Backend",
+                    "url": "https://github.com/ndmthuan97/trava-backend"
+                },
+                {
+                    "label": "Frontend",
+                    "url": "https://github.com/ndmthuan97/trava-frontend"
+                }
+            ],
+            "category": [
+                "backend",
+                "frontend"
+            ]
+        },
+        {
+            "id": 2,
+            "image": "./public/images/portfolio/phygen.png",
+            "title": "PhyGen Project",
+            "description": "Phygen – AI-Powered Physics Exam Generator System\n\nRole: Backend Developer - Team Size: 5 members\n\nBackend:\n- Developed RESTful APIs using .NET 8, designed with Clean Architecture and CQRS (MediatR)\n- Integrated ChatGPT and Gemini APIs for AI-driven question, solution, and explanation generation\n- Designed structured prompt workflows and content validation for high school physics exams\n- Implemented JWT Authentication and role-based authorization\n- Utilized PostgreSQL (EF Core) and Redis caching for performance optimization\n- Deployed backend services on Microsoft Azure\n\nFrontend:\n- Built a responsive SPA using React\n- Developed dynamic UI for exam generation, topic/difficulty customization, and result preview\n- Integrated AI-generated content with real-time user interactions\n- Managed authentication flow and API integration\n- Deployed frontend on Vercel\n\nTech Stack: .NET 8, EF Core, PostgreSQL, PayOS, React, Azure, Vercel, ChatGPT API, Gemini API, JWT",
+            "links": [
+                {
+                    "label": "Backend",
+                    "url": "https://github.com/ndmthuan97/PhyGen_BE"
+                },
+                {
+                    "label": "Frontend",
+                    "url": "https://github.com/tuyenhttt/PhyGen_FE"
+                }
+            ],
+            "category": [
+                "backend",
+                "frontend"
+            ]
+        },
+        {
+            "id": 3,
+            "image": "./public/images/portfolio/timeswap.png",
+            "title": "TimeSwap Project",
+            "description": "TimeSwap – Time Exchange & Job Marketplace Platform\n\nBackend (.NET 8):\n- Developed RESTful APIs with JWT authentication and role-based authorization\n- Built job management system (posting, search, application, applicant selection)\n- Integrated ChatGPT API for AI-powered job assistance\n- Implemented E-Wallet system with PostgreSQL and deployed on DigitalOcean\n\nFrontend (Angular 18):\n- Developed responsive SPA with authentication flow (Guard, Interceptor)\n- Built job listing, search, application, and profile management features\n- Integrated Google Maps API for location-based job search\n- Deployed frontend on Vercel\n\nMobile (Android – Kotlin):\n- Developed Android app using Kotlin, Jetpack Compose (MVVM)\n- Integrated backend APIs via Retrofit and Google Maps API\n- Implemented AI chatbot using ChatGPT API\n- Applied secure data handling and performance optimization\n\nTech Stack: .NET 8, PostgreSQL, JWT, Angular 18, Kotlin, Jetpack Compose, Google Maps API, ChatGPT API",
+            "links": [
+                {
+                    "label": "Website",
+                    "url": "https://github.com/tranduckhuy/time-swap"
+                },
+                {
+                    "label": "Mobile",
+                    "url": "https://github.com/SangTran13/time-swap-android"
+                }
+            ],
+            "category": [
+                "backend",
+                "frontend",
+                "mobile"
+            ]
+        },
+        {
+            "id": 4,
+            "image": "",
+            "title": "Adobe Migration Project",
+            "description": "Content Migration Project – Adobe Experience Manager (AEM)\n\nRole: Migration Developer | Team Size: ~40 members\n\n- Contributed to a large-scale enterprise content migration project using Adobe Experience Manager (AEM)\n- Migrated and validated landing pages from legacy CMS to AEM platform\n- Ensured data accuracy, content consistency, and structural integrity across environments\n- Followed structured workflows and task tracking using Jira\n- Maintained QA checklists and validation reports in Excel\n- Collaborated within an Agile team, improving cross-functional communication and enterprise workflow understanding\n\nTech Stack: Adobe Experience Manager (AEM), Jira, Excel, Agile/Scrum",
+            "links": [],
+            "category": [
+                "service",
+                "migration"
+            ]
+        }
+    ]
+}

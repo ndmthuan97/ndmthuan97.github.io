@@ -1,0 +1,41 @@
+{
+    "skillCategories": [
+        {
+            "title": "Backend",
+            "skills": [
+                { "icon": "dotnet" },
+                { "icon": "cs" },
+                { "icon": "java" },
+                { "icon": "redis" },
+                { "icon": "postgres" },
+                { "icon": "sqlserver" }
+            ]
+        },
+        {
+            "title": "Frontend",
+            "skills": [
+                { "icon": "angular" },
+                { "icon": "typescript" },
+                { "icon": "html" },
+                { "icon": "css" },
+                { "icon": "js" },
+                { "icon": "tailwindcss" },
+                { "icon": "bootstrap" },
+                { "icon": "primeng" }
+            ]
+        },
+        {
+            "title": "Others",
+            "skills": [
+                { "icon": "docker" },
+                { "icon": "git" },
+                { "icon": "github" },
+                { "icon": "azure" },
+                { "icon": "vercel" },
+                { "icon": "postman" },
+                { "icon": "figma" },
+                { "icon": "jira" }
+            ]
+        }
+    ]
+}
