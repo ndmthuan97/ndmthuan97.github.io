@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, ExternalLink } from "lucide-react";
 import portfolioData from "../data/portfolio.json";
+import { useReveal } from "../hooks/use-reveal";
 
 type Category = "all" | "backend" | "frontend" | "mobile";
 
@@ -24,6 +25,7 @@ const filters: { label: string; value: Category | "all" }[] = portfolioData.filt
 export function PortfolioSection() {
   const [activeFilter, setActiveFilter] = useState<Category | "all">("all");
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
+  const { isVisible, ref } = useReveal(0.05);
 
   const filteredItems =
     activeFilter === "all"
@@ -31,14 +33,14 @@ export function PortfolioSection() {
       : portfolioItems.filter((item) => item.category.includes(activeFilter));
 
   return (
-    <section id="portfolio" className="min-h-screen flex items-center py-20 relative overflow-hidden">
+    <section id="portfolio" ref={ref} className="min-h-screen flex items-center py-20 relative overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/10 rounded-full blur-3xl -z-10 transform translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
       <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-secondary/10 rounded-full blur-3xl -z-10 transform -translate-x-1/2 translate-y-1/2 animate-pulse delay-1000"></div>
 
       <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 relative">
+        <div className={`text-center mb-12 relative transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl md:text-8xl font-bold text-muted/30 uppercase tracking-widest select-none">
             WORKS
           </span>
@@ -70,8 +72,8 @@ export function PortfolioSection() {
             <div
               key={item.id}
               onClick={() => setSelectedProject(item)}
-              className="group relative overflow-hidden rounded-lg cursor-pointer bg-card border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 animate-in fade-in slide-in-from-bottom duration-500 fill-mode-backwards"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className={`group relative overflow-hidden rounded-lg cursor-pointer bg-card border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 ${isVisible ? "animate-in fade-in slide-in-from-bottom duration-500 fill-mode-backwards" : "opacity-0"}`}
+              style={{ animationDelay: isVisible ? `${index * 100}ms` : '0ms' }}
             >
               <div className="relative h-48 overflow-hidden">
                 <img
