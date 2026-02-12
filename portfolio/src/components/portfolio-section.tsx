@@ -70,7 +70,7 @@ export function PortfolioSection() {
             >
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src={item.image || "./public/default.png"}
+                  src={item.image || "/default.png"}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
@@ -125,7 +125,7 @@ export function PortfolioSection() {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-20 h-20 flex-shrink-0 overflow-hidden rounded-xl border border-border/50">
                   <img
-                    src={selectedProject.image || "./public/default.png"}
+                    src={selectedProject.image || "/default.png"}
                     alt={selectedProject.title}
                     className="w-full h-full object-cover"
                   />
