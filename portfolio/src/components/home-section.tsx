@@ -5,7 +5,7 @@ export function HeroSection({ onNavigate }: { onNavigate?: (section: string) => 
   const { name, role, bio, profileImage } = homeData;
 
   return (
-    <section className="min-h-screen flex items-center relative overflow-hidden">
+    <section id="home" className="min-h-screen flex items-center relative overflow-hidden">
 
 
       <div className="container mx-auto px-6 md:px-12 lg:px-20 flex justify-center">

@@ -10,11 +10,19 @@ import { SideNav } from './components/side-nav'
 function App() {
   const [activeSection, setActiveSection] = useState('home');
 
+  const handleNavigate = (sectionId: string) => {
+    setActiveSection(sectionId);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="min-h-screen w-full relative overflow-hidden">
+    <div className="min-h-screen w-full relative">
       {/* Ocean Breeze Fade Gradient */}
       <div
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="fixed inset-0 z-0 pointer-events-none"
         style={{
           background: `linear-gradient(225deg, #B3E5FC 0%, #E0F2F1 25%, #F0F4C3 50%, #FFF8E1 75%, #FFECB3 100%)`,
           opacity: 0.6,
@@ -22,13 +30,13 @@ function App() {
       />
 
       <div className="relative z-10">
-        <SideNav activeSection={activeSection} onNavigate={setActiveSection} />
-        <main className="pt-20 lg:pt-0">
-          {activeSection === 'home' && <HeroSection onNavigate={setActiveSection} />}
-          {activeSection === 'about' && <AboutSection />}
-          {activeSection === 'skills' && <SkillsSection />}
-          {activeSection === 'portfolio' && <PortfolioSection />}
-          {activeSection === 'contact' && <ContactSection />}
+        <SideNav activeSection={activeSection} onNavigate={handleNavigate} />
+        <main>
+          <HeroSection onNavigate={handleNavigate} />
+          <AboutSection />
+          <SkillsSection />
+          <PortfolioSection />
+          <ContactSection />
         </main>
       </div>
     </div>
