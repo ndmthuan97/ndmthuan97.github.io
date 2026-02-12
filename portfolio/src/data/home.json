@@ -2,5 +2,5 @@
     "name": "MINH THUAN",
     "role": "Web Developer",
     "bio": "I am a Vietnam-based Web Developer with a strong focus on:\n  - Backend (APIs, databases, system architecture)\n  - Frontend (UI/UX, performance).\nI enjoy building clean, maintainable, and efficient software solutions that deliver real value to users and businesses.",
-    "profileImage": "src/assets/images/profile.JPG"
+    "profileImage": "./public/profile.JPG"
 }
