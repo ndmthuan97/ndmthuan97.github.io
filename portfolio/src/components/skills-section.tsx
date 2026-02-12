@@ -13,8 +13,12 @@ export function SkillsSection() {
     const skillCategories = skillsData.skillCategories as SkillCategory[];
 
     return (
-        <section id="skills" className="min-h-screen flex items-center py-20 px-6 md:px-12 lg:px-20 bg-background">
-            <div className="container mx-auto max-w-6xl">
+        <section id="skills" className="min-h-screen flex items-center py-20 px-6 md:px-12 lg:px-20 relative overflow-hidden">
+            {/* Decorative Background Elements */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/5 rounded-full blur-[120px] -z-10" />
+            <div className="absolute top-20 left-10 w-64 h-64 bg-secondary/10 rounded-full blur-3xl -z-10 animate-pulse" />
+
+            <div className="container mx-auto max-w-6xl relative z-10">
                 {/* Section Header */}
                 <div className="text-center mb-16 relative">
                     <h2 className="text-6xl md:text-7xl font-bold text-muted/30 uppercase tracking-wider absolute left-1/2 -translate-x-1/2 top-0">
@@ -28,7 +32,7 @@ export function SkillsSection() {
                 {/* Skills Content */}
                 <div className="space-y-12">
                     {skillCategories.map((category, idx) => (
-                        <div key={idx} className="text-center">
+                        <div key={idx} className="text-center animate-in fade-in slide-in-from-bottom duration-700 fill-mode-backwards" style={{ animationDelay: `${idx * 200}ms` }}>
                             <h5 className="text-lg font-semibold text-muted-foreground mb-6">{category.title}</h5>
                             <div className="flex flex-wrap justify-center gap-4">
                                 {category.skills.map((skill, sIdx) => {
@@ -37,7 +41,8 @@ export function SkillsSection() {
                                     return (
                                         <div
                                             key={sIdx}
-                                            className={`w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden flex items-center justify-center transform hover:scale-110 transition-transform cursor-default group relative`}
+                                            className={`w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden flex items-center justify-center transform hover:scale-110 transition-transform cursor-default group relative animate-in zoom-in fade-in duration-500 fill-mode-backwards`}
+                                            style={{ animationDelay: `${(idx * 200) + (sIdx * 50)}ms` }}
                                         >
                                             {imgSrc ? (
                                                 <img src={imgSrc} alt={label} className="w-full h-full object-contain p-2 md:p-3" />

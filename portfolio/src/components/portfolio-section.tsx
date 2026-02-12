@@ -31,8 +31,12 @@ export function PortfolioSection() {
       : portfolioItems.filter((item) => item.category.includes(activeFilter));
 
   return (
-    <section id="portfolio" className="min-h-screen flex items-center py-20 bg-background relative">
-      <div className="container mx-auto px-6 md:px-12 lg:px-20">
+    <section id="portfolio" className="min-h-screen flex items-center py-20 relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/10 rounded-full blur-3xl -z-10 transform translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-secondary/10 rounded-full blur-3xl -z-10 transform -translate-x-1/2 translate-y-1/2 animate-pulse delay-1000"></div>
+
+      <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
         {/* Header */}
         <div className="text-center mb-12 relative">
           <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl md:text-8xl font-bold text-muted/30 uppercase tracking-widest select-none">
@@ -62,11 +66,12 @@ export function PortfolioSection() {
 
         {/* Portfolio Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredItems.map((item) => (
+          {filteredItems.map((item, index) => (
             <div
               key={item.id}
               onClick={() => setSelectedProject(item)}
-              className="group relative overflow-hidden rounded-lg cursor-pointer bg-card border border-border/50 shadow-sm hover:shadow-md transition-all duration-300"
+              className="group relative overflow-hidden rounded-lg cursor-pointer bg-card border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 animate-in fade-in slide-in-from-bottom duration-500 fill-mode-backwards"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="relative h-48 overflow-hidden">
                 <img

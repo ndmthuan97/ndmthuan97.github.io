@@ -39,7 +39,7 @@ export function ContactSection() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
                     {/* Contact Info */}
                     <div className="flex flex-col gap-6">
-                        {contactData.contacts.map((contact) => {
+                        {contactData.contacts.map((contact, index) => {
                             const Icon = ICON_MAP[contact.icon];
                             const isLink = !!contact.href;
                             const Wrapper = isLink ? "a" : "div";
@@ -55,10 +55,11 @@ export function ContactSection() {
                                 <Wrapper
                                     key={contact.id}
                                     {...wrapperProps}
-                                    className={`group flex items-center gap-5 p-5 rounded-xl bg-card border border-border/50 ${isLink
-                                            ? "hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-                                            : ""
+                                    className={`group flex items-center gap-5 p-5 rounded-xl bg-card border border-border/50 animate-in slide-in-from-left fade-in duration-500 fill-mode-backwards ${isLink
+                                        ? "hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                                        : ""
                                         }`}
+                                    style={{ animationDelay: `${300 + (index * 100)}ms` }}
                                 >
                                     <div className="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                                         {Icon && <Icon size={28} />}
@@ -75,7 +76,7 @@ export function ContactSection() {
                     </div>
 
                     {/* Contact Form / Decorative Image */}
-                    <div className="relative">
+                    <div className="relative animate-in slide-in-from-right fade-in duration-700 delay-500 fill-mode-backwards">
                         <div className="bg-card border border-border/50 rounded-2xl p-8 shadow-xl relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl -mr-16 -mt-16 transition-all duration-500 group-hover:bg-primary/20"></div>
                             <div className="absolute bottom-0 left-0 w-24 h-24 bg-secondary/10 rounded-full blur-2xl -ml-12 -mb-12 transition-all duration-500 group-hover:bg-secondary/20"></div>

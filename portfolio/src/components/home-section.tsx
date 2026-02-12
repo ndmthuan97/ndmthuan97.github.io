@@ -6,14 +6,12 @@ export function HeroSection({ onNavigate }: { onNavigate?: (section: string) => 
 
   return (
     <section className="min-h-screen flex items-center relative overflow-hidden">
-      {/* Yellow accent shape */}
-      <div className="absolute top-0 left-0 w-32 md:w-48 lg:w-64 h-32 md:h-48 lg:h-64 bg-primary rounded-br-full" />
-      <div className="absolute bottom-0 left-0 w-48 md:w-64 lg:w-80 h-32 md:h-48 lg:h-64 bg-primary" style={{ clipPath: "polygon(0 100%, 100% 100%, 0 0)" }} />
+
 
       <div className="container mx-auto px-6 md:px-12 lg:px-20 flex justify-center">
         <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20 w-full max-w-7xl">
           {/* Profile Image */}
-          <div className="relative z-10 flex-shrink-0">
+          <div className="relative z-10 flex-shrink-0 animate-in zoom-in fade-in duration-1000">
             <div className="relative w-64 aspect-[3/4] md:w-80 lg:w-[28rem] overflow-hidden shadow-2xl animate-profile border-4 border-primary/20">
               <img
                 src={profileImage}
@@ -25,18 +23,18 @@ export function HeroSection({ onNavigate }: { onNavigate?: (section: string) => 
 
           {/* Content */}
           <div className="flex-1 text-center lg:text-left z-10 max-w-2xl">
-            <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
+            <div className="flex items-center justify-center lg:justify-start gap-4 mb-4 animate-in slide-in-from-left fade-in duration-1000 delay-300 fill-mode-backwards">
               <span className="w-10 h-0.5 bg-primary" />
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
                 <span className="text-primary">{`I'M ${name.toUpperCase()}.`}</span>
               </h1>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 animate-in slide-in-from-left fade-in duration-1000 delay-300 fill-mode-backwards">
               {role}
             </h2>
 
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8 whitespace-pre-line">
+            <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8 whitespace-pre-line animate-in slide-in-from-left fade-in duration-1000 delay-500 fill-mode-backwards">
               {bio}
             </p>
 
@@ -46,7 +44,7 @@ export function HeroSection({ onNavigate }: { onNavigate?: (section: string) => 
               onClick={() => {
                 onNavigate?.("about");
               }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-primary text-primary-foreground font-semibold tracking-wide hover:bg-primary transition-all group"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-primary text-primary-foreground font-semibold tracking-wide hover:bg-primary transition-all group animate-in fade-in slide-in-from-bottom duration-1000 delay-700 fill-mode-backwards"
             >
               <span>MORE ABOUT ME</span>
               <span className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center group-hover:bg-primary-foreground group-hover:text-primary transition-colors">

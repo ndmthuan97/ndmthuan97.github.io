@@ -3,12 +3,12 @@
 
 @theme {
   --color-background: #ffffff;
-  --color-foreground: #111111;
-  --color-primary: #4EB09B;
+  --color-foreground: #1a1a1a;
+  --color-primary: #6D5B97;
   --color-primary-foreground: #ffffff;
-  --color-muted: #f5f5f5;
-  --color-muted-foreground: #666666;
-  --color-border: #eeeeee;
+  --color-muted: #f8f9fa;
+  --color-muted-foreground: #5a5a5a;
+  --color-border: #e9ecef;
 }
 
 :root {
@@ -70,7 +70,7 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #111111;
     background-color: #ffffff;
   }
 
