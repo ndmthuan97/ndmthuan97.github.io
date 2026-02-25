@@ -22,7 +22,22 @@
             "id": 1,
             "image": "/trava.png",
             "title": "Trava Project",
-            "description": "Trava - Task Management and Team Collaboration System\n\nRole: Backend + Frontend Developer - Team Size: 1 member\n\nBackend:\n- Built RESTful APIs using .NET 8, designed with Clean Architecture and CQRS (MediatR)\n- Implemented JWT Authentication and role-based authorization\n- Integrated PostgreSQL (EF Core) and Redis caching\n- Applied Repository Pattern, Unit of Work, and Rate Limiting\n- Documented APIs with Swagger/OpenAPI\n\nFrontend:\n- Developed SPA using Angular\n- Designed responsive UI with TailwindCSS and PrimeNG\n- Integrated APIs and handled Authentication, Guards, and HTTP Interceptors\n- Built interfaces for managing Spaces, Tasks, Assignments, and Notifications\n\nTech Stack: .NET 8, EF Core, PostgreSQL, Redis, Azure, Angular, TailwindCSS, PrimeNG, Vercel, JWT",
+            "description": "Trava is a comprehensive Task Management and Team Collaboration System designed to streamline project workflows.",
+            "overview": "Trava is a multi-workspace task management system. I developed this project to explore Clean Architecture and modern web technologies, focusing on high scalability and a smooth user experience for team collaboration.",
+            "technicalDetails": {
+                "backend": [
+                    "Built with .NET 8 using Clean Architecture and CQRS via MediatR.",
+                    "Implements JWT for security and role-based authorization.",
+                    "Integrates PostgreSQL for persistence and Redis for performance optimization.",
+                    "Applied Repository Pattern, Unit of Work, and Rate Limiting."
+                ],
+                "frontend": [
+                    "Single-page application built with Angular and TailwindCSS.",
+                    "Complex state management for tasks and real-time UI updates.",
+                    "Integrated PrimeNG components for a rich user interface.",
+                    "Implemented Authentication Guards and HTTP Interceptors."
+                ]
+            },
             "links": [
                 {
                     "label": "Backend",
@@ -36,13 +51,49 @@
             "category": [
                 "backend",
                 "frontend"
-            ]
+            ],
+            "technologies": {
+                "backend": [
+                    ".NET 8",
+                    "EF Core",
+                    "PostgreSQL",
+                    "Redis",
+                    "JWT",
+                    "CQRS",
+                    "Clean Architecture"
+                ],
+                "frontend": [
+                    "Angular",
+                    "TailwindCSS",
+                    "PrimeNG"
+                ],
+                "thirdParty": [
+                    "Azure",
+                    "Vercel",
+                    "Swagger/OpenAPI"
+                ]
+            }
         },
         {
             "id": 2,
             "image": "/phygen.png",
             "title": "PhyGen Project",
-            "description": "Phygen – AI-Powered Physics Exam Generator System\n\nRole: Backend Developer - Team Size: 5 members\n\nBackend:\n- Developed RESTful APIs using .NET 8, designed with Clean Architecture and CQRS (MediatR)\n- Integrated ChatGPT and Gemini APIs for AI-driven question, solution, and explanation generation\n- Designed structured prompt workflows and content validation for high school physics exams\n- Implemented JWT Authentication and role-based authorization\n- Utilized PostgreSQL (EF Core) and Redis caching for performance optimization\n- Deployed backend services on Microsoft Azure\n\nFrontend:\n- Built a responsive SPA using React\n- Developed dynamic UI for exam generation, topic/difficulty customization, and result preview\n- Integrated AI-generated content with real-time user interactions\n- Managed authentication flow and API integration\n- Deployed frontend on Vercel\n\nTech Stack: .NET 8, EF Core, PostgreSQL, PayOS, React, Azure, Vercel, ChatGPT API, Gemini API, JWT",
+            "description": "Phygen is an AI-Powered Physics Exam Generator System that helps teachers create exams automatically.",
+            "overview": "Phygen leverages AI to automate the creation of physics exams for high school students. It supports custom difficulty levels and topic selection, generating high-quality questions and detailed explanations instantly.",
+            "technicalDetails": {
+                "backend": [
+                    "Developed using .NET 8 with Clean Architecture and CQRS.",
+                    "Integrated ChatGPT and Gemini APIs for AI content generation.",
+                    "Designed structured prompt workflows and content validation.",
+                    "Utilized Redis caching for performance optimization."
+                ],
+                "frontend": [
+                    "Dynamic React-based SPA with interactive interface.",
+                    "Real-time previews of AI-generated content.",
+                    "Responsive UI styled with TailwindCSS.",
+                    "Managed complex authentication flows and API integrations."
+                ]
+            },
             "links": [
                 {
                     "label": "Backend",
@@ -56,16 +107,55 @@
             "category": [
                 "backend",
                 "frontend"
-            ]
+            ],
+            "technologies": {
+                "backend": [
+                    ".NET 8",
+                    "EF Core",
+                    "PostgreSQL",
+                    "JWT",
+                    "CQRS",
+                    "Clean Architecture",
+                    "Azure",
+                    "ChatGPT API",
+                    "Gemini API",
+                    "PayOS"
+                ],
+                "frontend": [
+                    "React",
+                    "TailwindCSS",
+                    "Vercel"
+                ]
+            }
         },
         {
             "id": 3,
             "image": "/timeswap.png",
             "title": "TimeSwap Project",
-            "description": "TimeSwap – Time Exchange & Job Marketplace Platform\n\nBackend (.NET 8):\n- Developed RESTful APIs with JWT authentication and role-based authorization\n- Built job management system (posting, search, application, applicant selection)\n- Integrated ChatGPT API for AI-powered job assistance\n- Implemented E-Wallet system with PostgreSQL and deployed on DigitalOcean\n\nFrontend (Angular 18):\n- Developed responsive SPA with authentication flow (Guard, Interceptor)\n- Built job listing, search, application, and profile management features\n- Integrated Google Maps API for location-based job search\n- Deployed frontend on Vercel\n\nMobile (Android – Kotlin):\n- Developed Android app using Kotlin, Jetpack Compose (MVVM)\n- Integrated backend APIs via Retrofit and Google Maps API\n- Implemented AI chatbot using ChatGPT API\n- Applied secure data handling and performance optimization\n\nTech Stack: .NET 8, PostgreSQL, JWT, Angular 18, Kotlin, Jetpack Compose, Google Maps API, ChatGPT API",
+            "description": "TimeSwap is a Time Exchange and Job Marketplace Platform connecting users for skill sharing and services.",
+            "overview": "TimeSwap creates a marketplace where users can exchange services using a 'time' currency. It includes robust job listing, search, and application systems with an integrated E-Wallet for secure transactions.",
+            "technicalDetails": {
+                "backend": [
+                    "Built with .NET 8 and PostgreSQL.",
+                    "Implements a secure job management system and E-Wallet ledger.",
+                    "Integrated ChatGPT for job assistance features.",
+                    "Deployed on DigitalOcean with automated workflows."
+                ],
+                "frontend": [
+                    "Angular 18 SPA with Google Maps integration.",
+                    "Features modern authentication flows and responsive profile management.",
+                    "Real-time job discovery and application tracking."
+                ],
+                "mobile": [
+                    "Native Android app built with Kotlin and Jetpack Compose (MVVM).",
+                    "Uses Retrofit for API communication.",
+                    "Features an AI chatbot for user assistance.",
+                    "Integrated Google Maps API for location-based features."
+                ]
+            },
             "links": [
                 {
-                    "label": "Website",
+                    "label": "Github",
                     "url": "https://github.com/tranduckhuy/time-swap"
                 },
                 {
@@ -77,18 +167,61 @@
                 "backend",
                 "frontend",
                 "mobile"
-            ]
+            ],
+            "technologies": {
+                "backend": [
+                    ".NET 8",
+                    "PostgreSQL",
+                    "JWT"
+                ],
+                "frontend": [
+                    "Angular",
+                    "TailwindCSS",
+                    "PrimeNG"
+                ],
+                "mobile": [
+                    "Kotlin",
+                    "Jetpack Compose",
+                    "MVVM",
+                    "Retrofit"
+                ],
+                "thirdParty": [
+                    "DigitalOcean",
+                    "Vercel",
+                    "Google Maps API",
+                    "ChatGPT API"
+                ]
+            }
         },
         {
             "id": 4,
             "image": "",
             "title": "Adobe Migration Project",
-            "description": "Content Migration Project – Adobe Experience Manager (AEM)\n\nRole: Migration Developer | Team Size: ~40 members\n\n- Contributed to a large-scale enterprise content migration project using Adobe Experience Manager (AEM)\n- Migrated and validated landing pages from legacy CMS to AEM platform\n- Ensured data accuracy, content consistency, and structural integrity across environments\n- Followed structured workflows and task tracking using Jira\n- Maintained QA checklists and validation reports in Excel\n- Collaborated within an Agile team, improving cross-functional communication and enterprise workflow understanding\n\nTech Stack: Adobe Experience Manager (AEM), Jira, Excel, Agile/Scrum",
+            "description": "A large-scale content migration project for an enterprise client using Adobe Experience Manager (AEM).",
+            "overview": "This project involved migrating and validating thousands of landing pages from legacy CMS platforms to Adobe Experience Manager. I ensured structural integrity and content consistency across global enterprise environments.",
+            "technicalDetails": {
+                "backend": [
+                    "Worked extensively with AEM Content Fragments and components.",
+                    "Validated landing pages for data accuracy and consistency.",
+                    "Followed strictly governed Agile workflows for enterprise deployment.",
+                    "Collaborated with cross-functional teams in a large-scale project."
+                ]
+            },
             "links": [],
             "category": [
                 "service",
                 "migration"
-            ]
+            ],
+            "technologies": {
+                "backend": [
+                    "Adobe Experience Manager (AEM)"
+                ],
+                "thirdParty": [
+                    "Jira",
+                    "Excel",
+                    "Agile/Scrum"
+                ]
+            }
         }
     ]
 }

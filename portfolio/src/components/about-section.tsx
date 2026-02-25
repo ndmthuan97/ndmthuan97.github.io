@@ -1,4 +1,3 @@
-import { Download } from "lucide-react";
 import aboutData from "../data/about.json";
 import { useReveal } from "../hooks/use-reveal";
 
@@ -52,16 +51,6 @@ export function AboutSection() {
                 </div>
               ))}
             </div>
-            <a
-              href="/cv.pdf"
-              download="NguyenDaoMinhThuan_CV.pdf"
-              className={`inline-flex items-center gap-3 bg-black border-2 border-black px-6 py-3 rounded-full font-medium !text-white hover:bg-black/80 transition-colors group ${isVisible ? "animate-in fade-in slide-in-from-bottom duration-700 delay-500 fill-mode-backwards" : "opacity-0"}`}
-            >
-              DOWNLOAD CV
-              <span className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black group-hover:bg-white/90 transition-colors">
-                <Download className="w-4 h-4" />
-              </span>
-            </a>
           </div>
 
           {/* Stats */}
