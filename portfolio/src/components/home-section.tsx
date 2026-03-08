@@ -46,7 +46,7 @@ export function HeroSection({ onNavigate }: { onNavigate?: (section: string) => 
               onClick={() => {
                 onNavigate?.("about");
               }}
-              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-primary text-primary-foreground font-semibold tracking-wide hover:bg-primary transition-all group ${isVisible ? "animate-in fade-in slide-in-from-bottom duration-1000 delay-700 fill-mode-backwards" : "opacity-0"}`}
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-primary text-primary-foreground font-semibold tracking-wide bg-primary transition-all group ${isVisible ? "animate-in fade-in slide-in-from-bottom duration-1000 delay-700 fill-mode-backwards" : "opacity-0"}`}
             >
               <span>MORE ABOUT ME</span>
               <span className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center group-hover:bg-primary-foreground group-hover:text-primary transition-colors">
