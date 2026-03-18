@@ -76,7 +76,11 @@ export function PortfolioSection() {
               key={filter.value}
               onClick={() => setActiveFilter(filter.value)}
               className={`px-6 py-2 rounded-xl text-xs font-bold tracking-widest transition-all uppercase ${activeFilter === filter.value
-                ? "bg-primary text-white shadow-lg shadow-primary/20"
+                ? filter.value === "all" ? "bg-primary text-white shadow-lg shadow-primary/20" :
+                  filter.value === "backend" ? "bg-blue-500 text-white shadow-lg shadow-blue-500/20" :
+                    filter.value === "frontend" ? "bg-green-500 text-white shadow-lg shadow-green-500/20" :
+                      filter.value === "mobile" ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20" :
+                        "bg-primary text-white shadow-lg shadow-primary/20"
                 : "bg-muted text-black/70 dark:bg-neutral-900 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800"
                 }`}
             >
@@ -109,14 +113,25 @@ export function PortfolioSection() {
 
               <div className="p-6">
                 <div className="flex flex-wrap gap-2 mb-3">
-                  {item.category.map((cat) => (
-                    <span
-                      key={cat}
-                      className="text-xs font-semibold px-2 py-1 bg-primary/10 text-primary rounded uppercase"
-                    >
-                      {cat}
-                    </span>
-                  ))}
+                  {item.category.map((cat) => {
+                    const isBackend = cat.toLowerCase() === "backend";
+                    const isFrontend = cat.toLowerCase() === "frontend";
+                    const isMobile = cat.toLowerCase() === "mobile";
+
+                    const colorClasses = isBackend ? "bg-blue-500/10 text-blue-600" :
+                      isFrontend ? "bg-green-500/10 text-green-600" :
+                        isMobile ? "bg-orange-500/10 text-orange-600" :
+                          "bg-primary/10 text-primary";
+
+                    return (
+                      <span
+                        key={cat}
+                        className={`text-[10px] font-bold px-2 py-0.5 ${colorClasses} rounded uppercase tracking-wide`}
+                      >
+                        {cat}
+                      </span>
+                    );
+                  })}
                 </div>
                 <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
                   {item.title}
@@ -171,20 +186,33 @@ export function PortfolioSection() {
                             l.label.toLowerCase().includes(cat.toLowerCase()) ||
                             cat.toLowerCase().includes(l.label.toLowerCase())
                           );
-                          const badgeClasses = "text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 transition-all active:scale-95 shadow-sm";
+                          const isBackend = cat.toLowerCase() === "backend";
+                          const isFrontend = cat.toLowerCase() === "frontend";
+                          const isMobile = cat.toLowerCase() === "mobile";
+
+                          const baseClasses = "text-[9px] md:text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 transition-all shadow-sm";
 
                           if (link) {
+                            const colorClass = isBackend ? "bg-blue-500" :
+                              isFrontend ? "bg-green-500" :
+                                isMobile ? "bg-orange-500" : "bg-primary";
+
                             return (
                               <a key={cat} href={link.url} target="_blank" rel="noopener noreferrer">
-                                <span className={`${badgeClasses} bg-primary text-primary-foreground hover:bg-primary/90`}>
+                                <span className={`${baseClasses} ${colorClass} text-white hover:opacity-90 active:scale-95`}>
                                   {cat}
                                   <ExternalLink size={10} />
                                 </span>
                               </a>
                             );
                           }
+
+                          const colorClass = isBackend ? "bg-blue-500/10 text-blue-600" :
+                            isFrontend ? "bg-green-500/10 text-green-600" :
+                              isMobile ? "bg-orange-500/10 text-orange-600" : "bg-primary/10 text-primary";
+
                           return (
-                            <span key={cat} className={`${badgeClasses} bg-muted text-muted-foreground`}>
+                            <span key={cat} className={`${baseClasses} ${colorClass} shadow-none`}>
                               {cat}
                             </span>
                           );
@@ -196,14 +224,17 @@ export function PortfolioSection() {
                             l.label.toLowerCase().includes(cat.toLowerCase()) ||
                             cat.toLowerCase().includes(l.label.toLowerCase())
                           ))
-                          .map((link, idx) => (
-                            <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer">
-                              <span className="text-[9px] md:text-[10px] font-bold px-2 py-0.5 bg-foreground text-background rounded-full uppercase tracking-wider flex items-center gap-1 hover:opacity-80 transition-all active:scale-95 shadow-sm">
-                                {link.label}
-                                <ExternalLink size={10} />
-                              </span>
-                            </a>
-                          ))}
+                          .map((link, idx) => {
+                            const isGithub = link.label.toLowerCase().includes("github");
+                            return (
+                              <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer">
+                                <span className={`text-[9px] md:text-[10px] font-bold px-2 py-0.5 ${isGithub ? "bg-neutral-900" : "bg-primary"} text-white rounded-full uppercase tracking-wider flex items-center gap-1 hover:opacity-80 transition-all active:scale-95 shadow-sm`}>
+                                  {link.label}
+                                  <ExternalLink size={10} />
+                                </span>
+                              </a>
+                            );
+                          })}
                       </div>
                     </div>
                   </div>
@@ -247,11 +278,11 @@ export function PortfolioSection() {
                     {selectedProject.technicalDetails?.mobile && (
                       <button
                         onClick={() => setActiveSubTab("mobile")}
-                        className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "mobile" ? "text-purple-500" : "text-muted-foreground hover:text-foreground"}`}
+                        className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "mobile" ? "text-orange-500" : "text-muted-foreground hover:text-foreground"}`}
                       >
                         Mobile
                         {activeSubTab === "mobile" && (
-                          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-500 rounded-full animate-in fade-in zoom-in duration-300"></span>
+                          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 rounded-full animate-in fade-in zoom-in duration-300"></span>
                         )}
                       </button>
                     )}
@@ -339,13 +370,13 @@ export function PortfolioSection() {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-left-4 duration-500">
                         <div className="md:col-span-2 space-y-4">
                           <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1.5 h-6 bg-purple-500 rounded-full"></div>
-                            <h6 className="text-[10px] font-black uppercase text-purple-500 tracking-widest">Implementation Details</h6>
+                            <div className="w-1.5 h-6 bg-orange-500 rounded-full"></div>
+                            <h6 className="text-[10px] font-black uppercase text-orange-500 tracking-widest">Implementation Details</h6>
                           </div>
                           <ul className="space-y-3">
                             {selectedProject.technicalDetails.mobile.map((item, i) => (
                               <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start group">
-                                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 flex-shrink-0 group-hover:scale-125 transition-transform"></span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1.5 flex-shrink-0 group-hover:scale-125 transition-transform"></span>
                                 <span className="leading-relaxed">{item}</span>
                               </li>
                             ))}
@@ -353,12 +384,12 @@ export function PortfolioSection() {
                         </div>
                         <div className="md:col-span-1 space-y-4">
                           <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1.5 h-6 bg-purple-500 rounded-full"></div>
-                            <h6 className="text-[10px] font-black uppercase text-purple-500 tracking-widest">Technologies</h6>
+                            <div className="w-1.5 h-6 bg-orange-500 rounded-full"></div>
+                            <h6 className="text-[10px] font-black uppercase text-orange-500 tracking-widest">Technologies</h6>
                           </div>
                           <div className="flex flex-wrap gap-2">
                             {selectedProject.technologies?.mobile?.map(tech => (
-                              <span key={tech} className="px-3 py-1.5 bg-muted border border-border text-[10px] font-bold rounded-lg text-foreground hover:border-purple-500 hover:bg-purple-50 transition-all cursor-default">
+                              <span key={tech} className="px-3 py-1.5 bg-muted border border-border text-[10px] font-bold rounded-lg text-foreground hover:border-orange-500 hover:bg-orange-50 transition-all cursor-default">
                                 {tech}
                               </span>
                             ))}
