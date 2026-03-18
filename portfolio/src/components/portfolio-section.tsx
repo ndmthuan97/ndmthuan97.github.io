@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, ExternalLink } from "lucide-react";
 import portfolioData from "../data/portfolio.json";
 import { useReveal } from "../hooks/use-reveal";
@@ -37,7 +37,14 @@ const filters: { label: string; value: Category | "all" }[] = portfolioData.filt
 export function PortfolioSection() {
   const [activeFilter, setActiveFilter] = useState<Category | "all">("all");
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
+  const [activeSubTab, setActiveSubTab] = useState<"overview" | "backend" | "frontend" | "mobile">("overview");
   const { isVisible, ref } = useReveal(0.05);
+
+  useEffect(() => {
+    if (selectedProject) {
+      setActiveSubTab("overview");
+    }
+  }, [selectedProject]);
 
   const filteredItems =
     activeFilter === "all"
@@ -202,121 +209,164 @@ export function PortfolioSection() {
                   </div>
                 </div>
 
-                {/* Overview - Synced style */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 border-b border-border pb-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
-                      <span className="font-black text-[10px] uppercase">OV</span>
-                    </div>
-                    <h5 className="font-bold text-lg uppercase tracking-tight">Overview</h5>
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed text-sm md:text-base whitespace-pre-wrap">
-                    {selectedProject.overview || selectedProject.description}
-                  </p>
-                </div>
-
-                <div className={`grid grid-cols-1 gap-6 md:gap-8 ${selectedProject.technicalDetails?.mobile ? 'lg:grid-cols-3' : 'md:grid-cols-2'}`}>
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-center gap-3 border-b border-border pb-3">
-                      <div className="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
-                        <span className="font-black text-[10px] uppercase">BE</span>
-                      </div>
-                      <h5 className="font-bold text-lg uppercase tracking-tight">Backend</h5>
-                    </div>
-
-                    <div className="flex-1">
-                      {selectedProject.technicalDetails?.backend ? (
-                        <ul className="space-y-2.5">
-                          {selectedProject.technicalDetails.backend.map((item, i) => (
-                            <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start">
-                              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0 animate-pulse"></span>
-                              <span className="leading-tight">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-xs text-muted-foreground italic">Documentation coming soon.</p>
+                {/* Technical Details Tabs */}
+                <div className="space-y-6">
+                  {/* Tab Navigation */}
+                  <div className="flex flex-wrap gap-2 md:gap-4 border-b border-border/60">
+                    <button
+                      onClick={() => setActiveSubTab("overview")}
+                      className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "overview" ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
+                    >
+                      Overview
+                      {activeSubTab === "overview" && (
+                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full animate-in fade-in zoom-in duration-300"></span>
                       )}
-                    </div>
-
-                    {selectedProject.technologies?.backend && (
-                      <div className="flex flex-wrap gap-1.5 pt-2">
-                        {selectedProject.technologies.backend.map(tech => (
-                          <span key={tech} className="px-2 py-1 bg-background border border-border text-[9px] font-bold rounded-md text-foreground hover:border-primary transition-colors">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
+                    </button>
+                    {selectedProject.technicalDetails?.backend && (
+                      <button
+                        onClick={() => setActiveSubTab("backend")}
+                        className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "backend" ? "text-blue-500" : "text-muted-foreground hover:text-foreground"}`}
+                      >
+                        Backend
+                        {activeSubTab === "backend" && (
+                          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 rounded-full animate-in fade-in zoom-in duration-300"></span>
+                        )}
+                      </button>
+                    )}
+                    {selectedProject.technicalDetails?.frontend && (
+                      <button
+                        onClick={() => setActiveSubTab("frontend")}
+                        className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "frontend" ? "text-green-500" : "text-muted-foreground hover:text-foreground"}`}
+                      >
+                        Frontend
+                        {activeSubTab === "frontend" && (
+                          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-green-500 rounded-full animate-in fade-in zoom-in duration-300"></span>
+                        )}
+                      </button>
+                    )}
+                    {selectedProject.technicalDetails?.mobile && (
+                      <button
+                        onClick={() => setActiveSubTab("mobile")}
+                        className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "mobile" ? "text-purple-500" : "text-muted-foreground hover:text-foreground"}`}
+                      >
+                        Mobile
+                        {activeSubTab === "mobile" && (
+                          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-500 rounded-full animate-in fade-in zoom-in duration-300"></span>
+                        )}
+                      </button>
                     )}
                   </div>
 
-                  {/* Frontend Column */}
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-center gap-3 border-b border-border pb-3">
-                      <div className="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center text-white shadow-lg shadow-green-500/20">
-                        <span className="font-black text-[10px] uppercase">FE</span>
+                  {/* Tab Content */}
+                  <div className="min-h-[200px]">
+                    {activeSubTab === "overview" && (
+                      <div className="space-y-4 animate-in fade-in slide-in-from-left-4 duration-500">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-1.5 h-6 bg-primary rounded-full"></div>
+                          <h6 className="text-[10px] font-black uppercase text-primary tracking-widest">Project Summary</h6>
+                        </div>
+                        <p className="text-muted-foreground leading-relaxed text-sm md:text-base whitespace-pre-wrap">
+                          {selectedProject.overview || selectedProject.description}
+                        </p>
                       </div>
-                      <h5 className="font-bold text-lg uppercase tracking-tight">Frontend</h5>
-                    </div>
+                    )}
 
-                    <div className="flex-1">
-                      {selectedProject.technicalDetails?.frontend ? (
-                        <ul className="space-y-2.5">
-                          {selectedProject.technicalDetails.frontend.map((item, i) => (
-                            <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start">
-                              <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0 animate-pulse"></span>
-                              <span className="leading-tight">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-xs text-muted-foreground italic">Documentation coming soon.</p>
-                      )}
-                    </div>
+                    {activeSubTab === "backend" && selectedProject.technicalDetails?.backend && (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-left-4 duration-500">
+                        <div className="md:col-span-2 space-y-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
+                            <h6 className="text-[10px] font-black uppercase text-blue-500 tracking-widest">Implementation Details</h6>
+                          </div>
+                          <ul className="space-y-3">
+                            {selectedProject.technicalDetails.backend.map((item, i) => (
+                              <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start group">
+                                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0 group-hover:scale-125 transition-transform"></span>
+                                <span className="leading-relaxed">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="md:col-span-1 space-y-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
+                            <h6 className="text-[10px] font-black uppercase text-blue-500 tracking-widest">Technologies</h6>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedProject.technologies?.backend?.map(tech => (
+                              <span key={tech} className="px-3 py-1.5 bg-muted border border-border text-[10px] font-bold rounded-lg text-foreground hover:border-blue-500 hover:bg-blue-50 transition-all cursor-default">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
-                    {selectedProject.technologies?.frontend && (
-                      <div className="flex flex-wrap gap-1.5 pt-2">
-                        {selectedProject.technologies.frontend.map(tech => (
-                          <span key={tech} className="px-2 py-1 bg-background border border-border text-[9px] font-bold rounded-md text-foreground hover:border-primary transition-colors">
-                            {tech}
-                          </span>
-                        ))}
+                    {activeSubTab === "frontend" && selectedProject.technicalDetails?.frontend && (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-left-4 duration-500">
+                        <div className="md:col-span-2 space-y-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-1.5 h-6 bg-green-500 rounded-full"></div>
+                            <h6 className="text-[10px] font-black uppercase text-green-500 tracking-widest">Implementation Details</h6>
+                          </div>
+                          <ul className="space-y-3">
+                            {selectedProject.technicalDetails.frontend.map((item, i) => (
+                              <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start group">
+                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0 group-hover:scale-125 transition-transform"></span>
+                                <span className="leading-relaxed">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="md:col-span-1 space-y-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-1.5 h-6 bg-green-500 rounded-full"></div>
+                            <h6 className="text-[10px] font-black uppercase text-green-500 tracking-widest">Technologies</h6>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedProject.technologies?.frontend?.map(tech => (
+                              <span key={tech} className="px-3 py-1.5 bg-muted border border-border text-[10px] font-bold rounded-lg text-foreground hover:border-green-500 hover:bg-green-50 transition-all cursor-default">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeSubTab === "mobile" && selectedProject.technicalDetails?.mobile && (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-left-4 duration-500">
+                        <div className="md:col-span-2 space-y-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-1.5 h-6 bg-purple-500 rounded-full"></div>
+                            <h6 className="text-[10px] font-black uppercase text-purple-500 tracking-widest">Implementation Details</h6>
+                          </div>
+                          <ul className="space-y-3">
+                            {selectedProject.technicalDetails.mobile.map((item, i) => (
+                              <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start group">
+                                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 flex-shrink-0 group-hover:scale-125 transition-transform"></span>
+                                <span className="leading-relaxed">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="md:col-span-1 space-y-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-1.5 h-6 bg-purple-500 rounded-full"></div>
+                            <h6 className="text-[10px] font-black uppercase text-purple-500 tracking-widest">Technologies</h6>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedProject.technologies?.mobile?.map(tech => (
+                              <span key={tech} className="px-3 py-1.5 bg-muted border border-border text-[10px] font-bold rounded-lg text-foreground hover:border-purple-500 hover:bg-purple-50 transition-all cursor-default">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>
-
-                  {/* Mobile Column */}
-                  {selectedProject.technicalDetails?.mobile && (
-                    <div className="flex flex-col gap-4">
-                      <div className="flex items-center gap-3 border-b border-border pb-3">
-                        <div className="w-8 h-8 rounded-lg bg-purple-500 flex items-center justify-center text-white shadow-lg shadow-purple-500/20">
-                          <span className="font-black text-[10px] uppercase">MB</span>
-                        </div>
-                        <h5 className="font-bold text-lg uppercase tracking-tight">Mobile</h5>
-                      </div>
-
-                      <div className="flex-1">
-                        <ul className="space-y-2.5">
-                          {selectedProject.technicalDetails.mobile.map((item, i) => (
-                            <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start">
-                              <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 flex-shrink-0 animate-pulse"></span>
-                              <span className="leading-tight">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {selectedProject.technologies?.mobile && (
-                        <div className="flex flex-wrap gap-1.5 pt-2">
-                          {selectedProject.technologies.mobile.map(tech => (
-                            <span key={tech} className="px-2 py-1 bg-background border border-border text-[9px] font-bold rounded-md text-foreground hover:border-primary transition-colors">
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
