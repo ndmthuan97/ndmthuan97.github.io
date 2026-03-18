@@ -41,7 +41,7 @@ export function SideNav({ activeSection, onNavigate }: { activeSection: string; 
               onClick={() => onNavigate(item.href)}
               className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer ${activeSection === item.href
                 ? "bg-primary text-primary-foreground"
-                : "bg-muted border border-border text-muted-foreground hover:text-primary hover:border-primary"
+                : "bg-muted border border-border text-muted-foreground hover:text-black hover:border-black dark:hover:text-primary dark:hover:border-primary"
                 }`}
               aria-label={item.label}
             >

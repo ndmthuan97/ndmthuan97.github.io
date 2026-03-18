@@ -77,7 +77,7 @@ export function PortfolioSection() {
               onClick={() => setActiveFilter(filter.value)}
               className={`px-6 py-2 rounded-xl text-xs font-bold tracking-widest transition-all uppercase ${activeFilter === filter.value
                 ? "bg-primary text-white shadow-lg shadow-primary/20"
-                : "bg-neutral-900 text-white/60 hover:text-white hover:bg-neutral-800"
+                : "bg-muted text-black/70 dark:bg-neutral-900 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800"
                 }`}
             >
               {filter.label}
@@ -132,9 +132,9 @@ export function PortfolioSection() {
 
       {/* Project Detail Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-start md:items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto">
           <div
-            className="relative w-full max-w-5xl bg-background rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 border border-border"
+            className="relative w-full max-w-5xl bg-background rounded-xl shadow-2xl animate-in zoom-in-95 duration-200 border border-border my-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
