@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { X, ExternalLink } from "lucide-react";
+import { useState, useMemo } from "react";
+import { X, ExternalLink, Server, Monitor } from "lucide-react";
 import portfolioData from "../data/portfolio.json";
 import { useReveal } from "../hooks/use-reveal";
 
@@ -16,6 +16,7 @@ interface PortfolioItem {
   title: string;
   description: string;
   overview?: string;
+  features?: string[];
   technicalDetails?: {
     backend?: string[];
     frontend?: string[];
@@ -34,17 +35,102 @@ interface PortfolioItem {
 const portfolioItems: PortfolioItem[] = portfolioData.items as PortfolioItem[];
 const filters: { label: string; value: Category | "all" }[] = portfolioData.filters as { label: string; value: Category | "all" }[];
 
+// Shields.io badge config per technology: { color: hex (no #), logo: simple-icons slug }
+const TECH_BADGE_MAP: Record<string, { color: string; logo?: string; label?: string }> = {
+  // .NET ecosystem
+  ".NET 8": { color: "512bd4", logo: "dotnet", label: ".NET-8.0" },
+  ".NET": { color: "512bd4", logo: "dotnet" },
+  "EF Core": { color: "0583cf", logo: "dotnet", label: "EF-Core" },
+  // Databases
+  "PostgreSQL": { color: "336791", logo: "postgresql" },
+  "Redis": { color: "dc382d", logo: "redis" },
+  "MySQL": { color: "4479a1", logo: "mysql" },
+  "MongoDB": { color: "47a248", logo: "mongodb" },
+  "SQLite": { color: "003b57", logo: "sqlite" },
+  // Auth / Security
+  "JWT": { color: "d63aff", logo: "jsonwebtokens", label: "JWT" },
+  // Architecture
+  "CQRS": { color: "e056fd", label: "CQRS" },
+  "Clean Architecture": { color: "10ac84", label: "Clean-Architecture" },
+  "MVVM": { color: "f368e0", label: "MVVM" },
+  // Frontend frameworks
+  "Angular": { color: "dd0031", logo: "angular" },
+  "React": { color: "61dafb", logo: "react", label: "React" },
+  "Vue.js": { color: "4fc08d", logo: "vuedotjs" },
+  "Next.js": { color: "000000", logo: "nextdotjs" },
+  "Vite": { color: "646cff", logo: "vite" },
+  // CSS
+  "TailwindCSS": { color: "06b6d4", logo: "tailwindcss" },
+  "PrimeNG": { color: "ff4757", logo: "primeng", label: "PrimeNG" },
+  // Mobile
+  "Kotlin": { color: "7f52ff", logo: "kotlin" },
+  "Jetpack Compose": { color: "4285f4", logo: "jetpackcompose", label: "Jetpack-Compose" },
+  "Retrofit": { color: "2ed573", label: "Retrofit" },
+  "Android": { color: "34a853", logo: "android" },
+  "Flutter": { color: "02569b", logo: "flutter" },
+  "Swift": { color: "f05138", logo: "swift" },
+  // Cloud / DevOps
+  "Azure": { color: "0078d4", logo: "microsoftazure", label: "Azure" },
+  "Vercel": { color: "111111", logo: "vercel" },
+  "DigitalOcean": { color: "0080ff", logo: "digitalocean" },
+  "Docker": { color: "2496ed", logo: "docker" },
+  "GitHub Actions": { color: "2088ff", logo: "githubactions" },
+  // AI / APIs
+  "ChatGPT API": { color: "10a37f", logo: "openai", label: "ChatGPT" },
+  "Gemini API": { color: "8e44ad", logo: "googlegemini", label: "Gemini" },
+  "PayOS": { color: "00b4d8", label: "PayOS" },
+  "Google Maps API": { color: "ea4335", logo: "googlemaps", label: "Google Maps" },
+  // Project mgmt / tools
+  "Jira": { color: "0052cc", logo: "jira" },
+  "Agile/Scrum": { color: "fd9644", label: "Agile-Scrum" },
+  "Excel": { color: "217346", logo: "microsoftexcel", label: "Excel" },
+  "Swagger/OpenAPI": { color: "85ea2d", logo: "swagger", label: "Swagger" },
+  "Adobe Experience Manager (AEM)": { color: "eb3b5a", logo: "adobe", label: "AEM" },
+};
+
+// Fallback palette – deterministic color from tech string
+const FALLBACK_COLORS = [
+  "FF6B6B", "4ECDC4", "45B7D1", "F9A826", "9B59B6",
+  "3498DB", "E74C3C", "2ECC71", "F1C40F", "1ABC9C",
+  "FF9F43", "00D2D3", "54A0FF", "5F27CD", "FF4757",
+  "2ED573", "FFA502", "3742FA", "E056FD", "686DE0"
+];
+
+function getBadgeUrl(tech: string): string {
+  const config = TECH_BADGE_MAP[tech];
+  if (config) {
+    const label = encodeURIComponent(config.label ?? tech);
+    const color = config.color;
+    const logoParam = config.logo ? `&logo=${config.logo}&logoColor=white` : "";
+    return `https://img.shields.io/badge/${label}-${color}.svg?style=flat${logoParam}`;
+  }
+  // Fallback: deterministic color, no logo
+  let hash = 0;
+  for (let i = 0; i < tech.length; i++) {
+    hash = tech.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const color = FALLBACK_COLORS[Math.abs(hash) % FALLBACK_COLORS.length];
+  const label = encodeURIComponent(tech);
+  return `https://img.shields.io/badge/${label}-${color}.svg?style=flat&logoColor=white`;
+}
+
+function TechLabel({ tech }: { tech: string }) {
+  const badgeUrl = useMemo(() => getBadgeUrl(tech), [tech]);
+  return (
+    <img
+      src={badgeUrl}
+      alt={tech}
+      title={tech}
+      className="h-5 cursor-default transition-all hover:scale-105 hover:shadow-md rounded-sm"
+      loading="lazy"
+    />
+  );
+}
+
 export function PortfolioSection() {
   const [activeFilter, setActiveFilter] = useState<Category | "all">("all");
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
-  const [activeSubTab, setActiveSubTab] = useState<"overview" | "backend" | "frontend" | "mobile">("overview");
   const { isVisible, ref } = useReveal(0.05);
-
-  useEffect(() => {
-    if (selectedProject) {
-      setActiveSubTab("overview");
-    }
-  }, [selectedProject]);
 
   const filteredItems =
     activeFilter === "all"
@@ -149,7 +235,7 @@ export function PortfolioSection() {
       {selectedProject && (
         <div className="fixed inset-0 z-50 flex items-start md:items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto">
           <div
-            className="relative w-full max-w-5xl bg-background rounded-xl shadow-2xl animate-in zoom-in-95 duration-200 border border-border my-auto"
+            className="relative w-full max-w-5xl bg-background rounded-xl shadow-2xl animate-in zoom-in-95 duration-200 border border-border my-auto flex flex-col max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
@@ -160,244 +246,224 @@ export function PortfolioSection() {
               <X size={20} />
             </button>
 
-            {/* Modal Content */}
-            <div className="p-4 md:p-6">
-              <div className="space-y-6">
-                {/* Left Side: Avatar + Title + Description */}
-                <div className="flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
-                  <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 overflow-hidden rounded-xl border-2 border-primary/20 bg-muted flex items-center justify-center shadow-lg">
-                    <img
-                      src={selectedProject.image || "/default.png"}
-                      alt={selectedProject.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(selectedProject.title) + '&background=random&color=fff&size=128';
-                      }}
-                    />
-                  </div>
-
-                  <div className="space-y-3 flex-1">
-                    <div className="space-y-1.5">
-                      <h3 className="text-2xl md:text-4xl font-black tracking-tighter text-foreground leading-tight">{selectedProject.title}</h3>
-                      <div className="flex flex-wrap justify-center md:justify-start gap-1.5">
-                        {/* Display Categories as Clickable Tags if Links exist */}
-                        {selectedProject.category.map((cat) => {
-                          const link = selectedProject.links?.find(l =>
-                            l.label.toLowerCase().includes(cat.toLowerCase()) ||
-                            cat.toLowerCase().includes(l.label.toLowerCase())
-                          );
-                          const isBackend = cat.toLowerCase() === "backend";
-                          const isFrontend = cat.toLowerCase() === "frontend";
-                          const isMobile = cat.toLowerCase() === "mobile";
-
-                          const baseClasses = "text-[9px] md:text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 transition-all shadow-sm";
-
-                          if (link) {
-                            const colorClass = isBackend ? "bg-blue-500" :
-                              isFrontend ? "bg-green-500" :
-                                isMobile ? "bg-orange-500" : "bg-primary";
-
-                            return (
-                              <a key={cat} href={link.url} target="_blank" rel="noopener noreferrer">
-                                <span className={`${baseClasses} ${colorClass} text-white hover:opacity-90 active:scale-95`}>
-                                  {cat}
-                                  <ExternalLink size={10} />
-                                </span>
-                              </a>
-                            );
-                          }
-
-                          const colorClass = isBackend ? "bg-blue-500/10 text-blue-600" :
-                            isFrontend ? "bg-green-500/10 text-green-600" :
-                              isMobile ? "bg-orange-500/10 text-orange-600" : "bg-primary/10 text-primary";
-
-                          return (
-                            <span key={cat} className={`${baseClasses} ${colorClass} shadow-none`}>
-                              {cat}
-                            </span>
-                          );
-                        })}
-
-                        {/* Display other links that don't match categories */}
-                        {selectedProject.links && selectedProject.links
-                          .filter(l => !selectedProject.category.some(cat =>
-                            l.label.toLowerCase().includes(cat.toLowerCase()) ||
-                            cat.toLowerCase().includes(l.label.toLowerCase())
-                          ))
-                          .map((link, idx) => {
-                            const isGithub = link.label.toLowerCase().includes("github");
-                            return (
-                              <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer">
-                                <span className={`text-[9px] md:text-[10px] font-bold px-2 py-0.5 ${isGithub ? "bg-neutral-900" : "bg-primary"} text-white rounded-full uppercase tracking-wider flex items-center gap-1 hover:opacity-80 transition-all active:scale-95 shadow-sm`}>
-                                  {link.label}
-                                  <ExternalLink size={10} />
-                                </span>
-                              </a>
-                            );
-                          })}
-                      </div>
-                    </div>
-                  </div>
+            {/* Modal Header */}
+            <div className="p-5 md:p-6 border-b border-border/60 flex-shrink-0">
+              <div className="flex flex-col md:flex-row gap-5 items-center md:items-start text-center md:text-left">
+                <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 overflow-hidden rounded-xl border-2 border-primary/20 bg-muted flex items-center justify-center shadow-lg">
+                  <img
+                    src={selectedProject.image || "/default.png"}
+                    alt={selectedProject.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src =
+                        "https://ui-avatars.com/api/?name=" +
+                        encodeURIComponent(selectedProject.title) +
+                        "&background=random&color=fff&size=128";
+                    }}
+                  />
                 </div>
 
-                {/* Technical Details Tabs */}
-                <div className="space-y-6">
-                  {/* Tab Navigation */}
-                  <div className="flex flex-wrap gap-2 md:gap-4 border-b border-border/60">
-                    <button
-                      onClick={() => setActiveSubTab("overview")}
-                      className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "overview" ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
-                    >
-                      Overview
-                      {activeSubTab === "overview" && (
-                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full animate-in fade-in zoom-in duration-300"></span>
+                <div className="flex-1 space-y-2">
+                  <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-foreground leading-tight">
+                    {selectedProject.title}
+                  </h3>
+                  <div className="flex flex-wrap justify-center md:justify-start gap-1.5">
+                    {/* Category tags — linked if a matching link exists */}
+                    {selectedProject.category.map((cat) => {
+                      const link = selectedProject.links?.find(
+                        (l) =>
+                          l.label.toLowerCase().includes(cat.toLowerCase()) ||
+                          cat.toLowerCase().includes(l.label.toLowerCase())
+                      );
+                      const isBackend = cat.toLowerCase() === "backend";
+                      const isFrontend = cat.toLowerCase() === "frontend";
+                      const isMobile = cat.toLowerCase() === "mobile";
+                      const baseClasses =
+                        "text-[9px] md:text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 transition-all shadow-sm";
+
+                      if (link) {
+                        const colorClass = isBackend
+                          ? "bg-blue-500"
+                          : isFrontend
+                            ? "bg-green-500"
+                            : isMobile
+                              ? "bg-orange-500"
+                              : "bg-primary";
+                        return (
+                          <a key={cat} href={link.url} target="_blank" rel="noopener noreferrer">
+                            <span className={`${baseClasses} ${colorClass} text-white hover:opacity-90 active:scale-95`}>
+                              {cat} <ExternalLink size={10} />
+                            </span>
+                          </a>
+                        );
+                      }
+
+                      const colorClass = isBackend
+                        ? "bg-blue-500/10 text-blue-600"
+                        : isFrontend
+                          ? "bg-green-500/10 text-green-600"
+                          : isMobile
+                            ? "bg-orange-500/10 text-orange-600"
+                            : "bg-primary/10 text-primary";
+                      return (
+                        <span key={cat} className={`${baseClasses} ${colorClass} shadow-none`}>
+                          {cat}
+                        </span>
+                      );
+                    })}
+
+                    {/* Other links not matching any category */}
+                    {selectedProject.links
+                      ?.filter(
+                        (l) =>
+                          !selectedProject.category.some(
+                            (cat) =>
+                              l.label.toLowerCase().includes(cat.toLowerCase()) ||
+                              cat.toLowerCase().includes(l.label.toLowerCase())
+                          )
+                      )
+                      .map((link, idx) => {
+                        const isGithub = link.label.toLowerCase().includes("github");
+                        return (
+                          <a key={idx} href={link.url} target="_blank" rel="noopener noreferrer">
+                            <span
+                              className={`text-[9px] md:text-[10px] font-bold px-2.5 py-1 ${isGithub ? "bg-neutral-900" : "bg-primary"
+                                } text-white rounded-full uppercase tracking-wider flex items-center gap-1 hover:opacity-80 transition-all active:scale-95 shadow-sm`}
+                            >
+                              {link.label} <ExternalLink size={10} />
+                            </span>
+                          </a>
+                        );
+                      })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Body — Two-column layout */}
+            <div className="p-5 md:p-6 overflow-y-auto custom-scrollbar">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8">
+
+                {/* ── LEFT COLUMN: Overview + Key Features (wider) ── */}
+                <div className="md:col-span-3 space-y-6 md:border-r border-border/60 md:pr-8">
+                  {/* Overview */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1 h-5 bg-primary rounded-full"></div>
+                      <h6 className="text-xs font-black uppercase text-primary tracking-widest">Overview</h6>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed text-sm whitespace-pre-wrap">
+                      {selectedProject.overview || selectedProject.description}
+                    </p>
+                  </div>
+
+                  {/* Key Features — explicitly defined in JSON */}
+                  {selectedProject.features && selectedProject.features.length > 0 && (
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-1 h-5 bg-primary rounded-full"></div>
+                        <h6 className="text-xs font-black uppercase text-primary tracking-widest">Key Features</h6>
+                      </div>
+                      <ul className="space-y-3">
+                        {selectedProject.features.map((feature, i) => (
+                          <li key={i} className="flex gap-2.5 text-sm text-muted-foreground items-start group">
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0 group-hover:scale-125 group-hover:bg-primary transition-all"></span>
+                            <span className="leading-relaxed whitespace-pre-line">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
+                {/* ── RIGHT COLUMN: Backend + Frontend tech sections (narrower) ── */}
+                <div className="md:col-span-2 space-y-6">
+                  {/* Backend */}
+                  {(selectedProject.technicalDetails?.backend || selectedProject.technologies?.backend) && (
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Server size={16} className="text-blue-500 flex-shrink-0" />
+                        <h6 className="text-xs font-black uppercase text-blue-500 tracking-widest">Backend</h6>
+                      </div>
+
+                      {selectedProject.technicalDetails?.backend && (
+                        <ul className="space-y-1.5">
+                          {selectedProject.technicalDetails.backend.slice(0, 2).map((item, i) => (
+                            <li key={i} className="flex gap-2 text-sm text-muted-foreground items-start">
+                              <span className="w-1 h-1 rounded-full bg-blue-400 mt-2 flex-shrink-0"></span>
+                              <span className="leading-relaxed">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
                       )}
-                    </button>
-                    {selectedProject.technicalDetails?.backend && (
-                      <button
-                        onClick={() => setActiveSubTab("backend")}
-                        className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "backend" ? "text-blue-500" : "text-muted-foreground hover:text-foreground"}`}
-                      >
-                        Backend
-                        {activeSubTab === "backend" && (
-                          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 rounded-full animate-in fade-in zoom-in duration-300"></span>
-                        )}
-                      </button>
-                    )}
-                    {selectedProject.technicalDetails?.frontend && (
-                      <button
-                        onClick={() => setActiveSubTab("frontend")}
-                        className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "frontend" ? "text-green-500" : "text-muted-foreground hover:text-foreground"}`}
-                      >
-                        Frontend
-                        {activeSubTab === "frontend" && (
-                          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-green-500 rounded-full animate-in fade-in zoom-in duration-300"></span>
-                        )}
-                      </button>
-                    )}
-                    {selectedProject.technicalDetails?.mobile && (
-                      <button
-                        onClick={() => setActiveSubTab("mobile")}
-                        className={`pb-3 px-2 text-sm font-bold uppercase tracking-tight transition-all relative ${activeSubTab === "mobile" ? "text-orange-500" : "text-muted-foreground hover:text-foreground"}`}
-                      >
-                        Mobile
-                        {activeSubTab === "mobile" && (
-                          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 rounded-full animate-in fade-in zoom-in duration-300"></span>
-                        )}
-                      </button>
-                    )}
-                  </div>
 
-                  {/* Tab Content */}
-                  <div className="min-h-[200px]">
-                    {activeSubTab === "overview" && (
-                      <div className="space-y-4 animate-in fade-in slide-in-from-left-4 duration-500">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-1.5 h-6 bg-primary rounded-full"></div>
-                          <h6 className="text-[10px] font-black uppercase text-primary tracking-widest">Project Summary</h6>
+                      {selectedProject.technologies?.backend && selectedProject.technologies.backend.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {selectedProject.technologies.backend.map((tech) => (
+                            <TechLabel key={tech} tech={tech} />
+                          ))}
                         </div>
-                        <p className="text-muted-foreground leading-relaxed text-sm md:text-base whitespace-pre-wrap">
-                          {selectedProject.overview || selectedProject.description}
-                        </p>
-                      </div>
-                    )}
+                      )}
+                    </div>
+                  )}
 
-                    {activeSubTab === "backend" && selectedProject.technicalDetails?.backend && (
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-left-4 duration-500">
-                        <div className="md:col-span-2 space-y-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
-                            <h6 className="text-[10px] font-black uppercase text-blue-500 tracking-widest">Implementation Details</h6>
-                          </div>
-                          <ul className="space-y-3">
-                            {selectedProject.technicalDetails.backend.map((item, i) => (
-                              <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start group">
-                                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0 group-hover:scale-125 transition-transform"></span>
-                                <span className="leading-relaxed">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div className="md:col-span-1 space-y-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
-                            <h6 className="text-[10px] font-black uppercase text-blue-500 tracking-widest">Technologies</h6>
-                          </div>
-                          <div className="flex flex-wrap gap-2">
-                            {selectedProject.technologies?.backend?.map(tech => (
-                              <span key={tech} className="px-3 py-1.5 bg-muted border border-border text-[10px] font-bold rounded-lg text-foreground hover:border-blue-500 hover:bg-blue-50 transition-all cursor-default">
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
+                  {/* Frontend */}
+                  {(selectedProject.technicalDetails?.frontend || selectedProject.technologies?.frontend) && (
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Monitor size={16} className="text-green-500 flex-shrink-0" />
+                        <h6 className="text-xs font-black uppercase text-green-500 tracking-widest">Frontend</h6>
                       </div>
-                    )}
 
-                    {activeSubTab === "frontend" && selectedProject.technicalDetails?.frontend && (
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-left-4 duration-500">
-                        <div className="md:col-span-2 space-y-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1.5 h-6 bg-green-500 rounded-full"></div>
-                            <h6 className="text-[10px] font-black uppercase text-green-500 tracking-widest">Implementation Details</h6>
-                          </div>
-                          <ul className="space-y-3">
-                            {selectedProject.technicalDetails.frontend.map((item, i) => (
-                              <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start group">
-                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1.5 flex-shrink-0 group-hover:scale-125 transition-transform"></span>
-                                <span className="leading-relaxed">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div className="md:col-span-1 space-y-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1.5 h-6 bg-green-500 rounded-full"></div>
-                            <h6 className="text-[10px] font-black uppercase text-green-500 tracking-widest">Technologies</h6>
-                          </div>
-                          <div className="flex flex-wrap gap-2">
-                            {selectedProject.technologies?.frontend?.map(tech => (
-                              <span key={tech} className="px-3 py-1.5 bg-muted border border-border text-[10px] font-bold rounded-lg text-foreground hover:border-green-500 hover:bg-green-50 transition-all cursor-default">
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                      {selectedProject.technicalDetails?.frontend && (
+                        <ul className="space-y-1.5">
+                          {selectedProject.technicalDetails.frontend.slice(0, 2).map((item, i) => (
+                            <li key={i} className="flex gap-2 text-sm text-muted-foreground items-start">
+                              <span className="w-1 h-1 rounded-full bg-green-400 mt-2 flex-shrink-0"></span>
+                              <span className="leading-relaxed">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
 
-                    {activeSubTab === "mobile" && selectedProject.technicalDetails?.mobile && (
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-left-4 duration-500">
-                        <div className="md:col-span-2 space-y-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1.5 h-6 bg-orange-500 rounded-full"></div>
-                            <h6 className="text-[10px] font-black uppercase text-orange-500 tracking-widest">Implementation Details</h6>
-                          </div>
-                          <ul className="space-y-3">
-                            {selectedProject.technicalDetails.mobile.map((item, i) => (
-                              <li key={i} className="flex gap-3 text-sm text-muted-foreground items-start group">
-                                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1.5 flex-shrink-0 group-hover:scale-125 transition-transform"></span>
-                                <span className="leading-relaxed">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
+                      {selectedProject.technologies?.frontend && selectedProject.technologies.frontend.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {selectedProject.technologies.frontend.map((tech) => (
+                            <TechLabel key={tech} tech={tech} />
+                          ))}
                         </div>
-                        <div className="md:col-span-1 space-y-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1.5 h-6 bg-orange-500 rounded-full"></div>
-                            <h6 className="text-[10px] font-black uppercase text-orange-500 tracking-widest">Technologies</h6>
-                          </div>
-                          <div className="flex flex-wrap gap-2">
-                            {selectedProject.technologies?.mobile?.map(tech => (
-                              <span key={tech} className="px-3 py-1.5 bg-muted border border-border text-[10px] font-bold rounded-lg text-foreground hover:border-orange-500 hover:bg-orange-50 transition-all cursor-default">
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Mobile (if exists) */}
+                  {(selectedProject.technicalDetails?.mobile || selectedProject.technologies?.mobile) && (
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-orange-500 text-sm font-bold">📱</span>
+                        <h6 className="text-xs font-black uppercase text-orange-500 tracking-widest">Mobile</h6>
                       </div>
-                    )}
-                  </div>
+
+                      {selectedProject.technicalDetails?.mobile && (
+                        <ul className="space-y-1.5">
+                          {selectedProject.technicalDetails.mobile.slice(0, 2).map((item, i) => (
+                            <li key={i} className="flex gap-2 text-sm text-muted-foreground items-start">
+                              <span className="w-1 h-1 rounded-full bg-orange-400 mt-2 flex-shrink-0"></span>
+                              <span className="leading-relaxed">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {selectedProject.technologies?.mobile && selectedProject.technologies.mobile.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {selectedProject.technologies.mobile.map((tech) => (
+                            <TechLabel key={tech} tech={tech} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

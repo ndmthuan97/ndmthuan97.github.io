@@ -24,6 +24,13 @@
             "title": "Trava Project",
             "description": "Trava is a comprehensive Task Management and Team Collaboration System designed to streamline project workflows.",
             "overview": "Trava is a multi-workspace task management system. I developed this project to explore Clean Architecture and modern web technologies, focusing on high scalability and a smooth user experience for team collaboration.",
+            "features": [
+                "🔐 Member Management: Secure registration, login, personal profile management, and security updates.",
+                "🏢 Workspace Management (Spaces): Supports Private and Team space models with clear role-based access control.",
+                "📩 Invitation System: Mechanism to send/receive Workspace invitations and manage invitation statuses in real-time.",
+                "✅ Task Management:\n- Supports complex Task structures (Parent/Sub-tasks).\n- Manages priority levels (Low to Urgent) and workloads (Points).\n- Direct interaction via a built-in commenting system.",
+                "🔔 Notification System: Provides real-time updates on Space changes, Task assignments, and deadline reminders."
+            ],
             "technicalDetails": {
                 "backend": [
                     "Built with .NET 8 using Clean Architecture and CQRS via MediatR.",
@@ -80,6 +87,16 @@
             "title": "PhyGen Project",
             "description": "Phygen is an AI-Powered Physics Exam Generator System that helps teachers create exams automatically.",
             "overview": "Phygen leverages AI to automate the creation of physics exams for high school students. It supports custom difficulty levels and topic selection, generating high-quality questions and detailed explanations instantly.",
+            "features": [
+                "🏫 Curriculum Management: Flexible organization by Curriculum -> Subject -> Chapter -> Topic -> Section.",
+                "📝 Question Bank: Supports various question types, media attachments via Cloudinary, and categorization by difficulty and educational goals.",
+                "⚙️ Automated Exam Generation (Matrixized Exam): Builds detailed exam matrices and automatically synthesizes exams meeting precise knowledge and difficulty requirements.",
+                "💳 Payment Integration: Supports secure transactions via the PayOS gateway.",
+                "🔐 Security & Authentication:\n- Login/Registration with Email OTP.\n- Detailed Role-Based Access Control (RBAC).\n- Utilizes JWT Bearer tokens for API security.",
+                "📧 Notifications: Real-time notification system for course statuses, exams, and transactions.",
+                "💬 Online Support: Integrated Chatbox module to assist users and answer inquiries.",
+                "📄 Document Publishing: Supports exporting exams and documents to professional Word/PDF formats."
+            ],
             "technicalDetails": {
                 "backend": [
                     "Developed using .NET 8 with Clean Architecture and CQRS.",
@@ -134,6 +151,13 @@
             "title": "TimeSwap Project",
             "description": "TimeSwap is a Time Exchange and Job Marketplace Platform connecting users for skill sharing and services.",
             "overview": "TimeSwap creates a marketplace where users can exchange services using a 'time' currency. It includes robust job listing, search, and application systems with an integrated E-Wallet for secure transactions.",
+            "features": [
+                "👤 User Authentication:\n- Login / Register with email.\n- Forgot Password and Change Password support.\n- Secure Logout from the system.",
+                "📋 Job Management:\n- Job Listings: View all available jobs with essential details.\n- Job Search: Search jobs by name, fee, industry, category, location.\n- Post Job: Post a new job.\n- Apply for Jobs: Submit applications with user profiles.\n- Job Details: View full job descriptions and requirements.\n- Job Applicant List: Employers can review applicants and select the most suitable candidate.",
+                "🤖 AI Chatbot Integration:\n- Integrated ChatGPT API to assist users with job-related inquiries.",
+                "💳 Payment Management:\n- E-Wallet Integration for seamless transactions.\n- Transaction History to keep track of payments.",
+                "📄 User Profile Management:\n- View & Edit Profile: Update user's profile.\n- Account Information: View subscription details and current balance."
+            ],
             "technicalDetails": {
                 "backend": [
                     "Built with .NET 8 and PostgreSQL.",
@@ -199,6 +223,11 @@
             "title": "Adobe Migration Project",
             "description": "A large-scale content migration project for an enterprise client using Adobe Experience Manager (AEM).",
             "overview": "This project involved migrating and validating thousands of landing pages from legacy CMS platforms to Adobe Experience Manager. I ensured structural integrity and content consistency across global enterprise environments.",
+            "features": [
+                "📄 Large-Scale Migration: Migrated and validated thousands of landing pages from legacy CMS platforms.",
+                "✅ Content Consistency: Ensured structural integrity and content consistency across global enterprise environments.",
+                "🔄 Agile Governance: Followed strictly governed Agile workflows for enterprise deployment and collaboration."
+            ],
             "technicalDetails": {
                 "backend": [
                     "Worked extensively with AEM Content Fragments and components.",
