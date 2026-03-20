@@ -33,16 +33,17 @@
             ],
             "technicalDetails": {
                 "backend": [
-                    "Built with .NET 8 using Clean Architecture and CQRS via MediatR.",
-                    "Implements JWT for security and role-based authorization.",
-                    "Integrates PostgreSQL for persistence and Redis for performance optimization.",
-                    "Applied Repository Pattern, Unit of Work, and Rate Limiting."
+                    "Engineered a scalable RESTful API with .NET 8, implementing Clean Architecture to decouple the domain core from infrastructure.",
+                    "Utilized CQRS pattern with MediatR to separate read/write models, drastically optimizing complex database queries.",
+                    "Designed a robust data access layer using Entity Framework Core and PostgreSQL with Repository and Unit of Work patterns.",
+                    "Integrated Redis for high-speed distributed caching of frequently accessed workspace configurations.",
+                    "Secured endpoints using JWT authentication, implementing granular Role-Based Access Control (RBAC) to govern Spaces and Tasks."
                 ],
                 "frontend": [
-                    "Single-page application built with Angular and TailwindCSS.",
-                    "Complex state management for tasks and real-time UI updates.",
-                    "Integrated PrimeNG components for a rich user interface.",
-                    "Implemented Authentication Guards and HTTP Interceptors."
+                    "Developed a highly responsive Single Page Application (SPA) leveraging Angular and TailwindCSS.",
+                    "Managed complex cross-component state synchronization for real-time Kanban board updates and comment threads.",
+                    "Built reusable and accessible UI components extensively utilizing the PrimeNG component library.",
+                    "Ensured client-side security with strict generic Authentication Route Guards and centralized HTTP Interceptors."
                 ]
             },
             "links": [
@@ -99,16 +100,16 @@
             ],
             "technicalDetails": {
                 "backend": [
-                    "Developed using .NET 8 with Clean Architecture and CQRS.",
-                    "Integrated ChatGPT and Gemini APIs for AI content generation.",
-                    "Designed structured prompt workflows and content validation.",
-                    "Utilized Redis caching for performance optimization."
+                    "Architected a robust document generation backend using .NET 8, adhering strictly to Clean Architecture principles.",
+                    "Seamlessly integrated advanced LLMs (ChatGPT and Gemini APIs) to procedurally synthesize curriculum-accurate physics exam matrices.",
+                    "Implemented secure payment processing workflows with external PayOS webhooks, ensuring ACID compliance for financial logs.",
+                    "Boosted API responsiveness by implementing comprehensive response optimization strategies using Redis."
                 ],
                 "frontend": [
-                    "Dynamic React-based SPA with interactive interface.",
-                    "Real-time previews of AI-generated content.",
-                    "Responsive UI styled with TailwindCSS.",
-                    "Managed complex authentication flows and API integrations."
+                    "Crafted a specialized, interactive React Single Page Application focused on fluid user experiences during complex exam generation.",
+                    "Implemented real-time streaming and previews of AI-generated text and LaTeX mathematical formulas.",
+                    "Designed a sleek, intuitive layout using TailwindCSS, optimizing multi-step wizard interfaces for educators.",
+                    "Engineered complex state management to track curriculum trees, dynamic exam matrices, and ongoing payment transactions."
                 ]
             },
             "links": [
@@ -160,21 +161,22 @@
             ],
             "technicalDetails": {
                 "backend": [
-                    "Built with .NET 8 and PostgreSQL.",
-                    "Implements a secure job management system and E-Wallet ledger.",
-                    "Integrated ChatGPT for job assistance features.",
-                    "Deployed on DigitalOcean with automated workflows."
+                    "Developed a high-performance backend ecosystem using .NET 8 supporting high volumes of transactional 'Time' exchanges.",
+                    "Engineered a bulletproof E-Wallet ledger system within PostgreSQL, meticulously tracking time-credits using optimistic concurrency.",
+                    "Interfaced with the ChatGPT API to power an intelligent matching backend that recommends relevant job listings by parsing user skillsets.",
+                    "Automated CI/CD pipelines for seamless, zero-downtime deployments onto scalable DigitalOcean droplets."
                 ],
                 "frontend": [
-                    "Angular 18 SPA with Google Maps integration.",
-                    "Features modern authentication flows and responsive profile management.",
-                    "Real-time job discovery and application tracking."
+                    "Built a Progressive Web App (PWA) oriented SPA with Angular 18 focusing on lightning-fast job discovery.",
+                    "Deeply integrated Google Maps API for geospatial search, enabling users to find local freelance opportunities intuitively.",
+                    "Designed a polished dashboard layout employing TailwindCSS and PrimeNG for complex data grids and user statistics.",
+                    "Engineered robust dynamic forms with comprehensive reactive validators for job posting and profile onboarding."
                 ],
                 "mobile": [
-                    "Native Android app built with Kotlin and Jetpack Compose (MVVM).",
-                    "Uses Retrofit for API communication.",
-                    "Features an AI chatbot for user assistance.",
-                    "Integrated Google Maps API for location-based features."
+                    "Developed a native Android application using modern Kotlin standards and the declarative Jetpack Compose UI toolkit.",
+                    "Architected the mobile client with the MVVM pattern alongside Android Architecture Components for reactive UI state.",
+                    "Utilized Retrofit and Coroutines/Flow for asynchronous, non-blocking network requests ensuring smooth scrolling in job feeds.",
+                    "Embedded an AI conversational interface directly on-device and leveraged location services for precise geographic job filtering."
                 ]
             },
             "links": [

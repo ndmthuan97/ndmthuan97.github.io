@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { X, ExternalLink, Server, Monitor } from "lucide-react";
+import { X, ExternalLink, Server, Monitor, FileText, Sparkles } from "lucide-react";
 import portfolioData from "../data/portfolio.json";
 import { useReveal } from "../hooks/use-reveal";
 
@@ -349,7 +349,7 @@ export function PortfolioSection() {
                   {/* Overview */}
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-1 h-5 bg-primary rounded-full"></div>
+                      <FileText size={16} className="text-primary flex-shrink-0" />
                       <h6 className="text-xs font-black uppercase text-primary tracking-widest">Overview</h6>
                     </div>
                     <p className="text-muted-foreground leading-relaxed text-sm whitespace-pre-wrap">
@@ -361,7 +361,7 @@ export function PortfolioSection() {
                   {selectedProject.features && selectedProject.features.length > 0 && (
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-1 h-5 bg-primary rounded-full"></div>
+                        <Sparkles size={16} className="text-primary flex-shrink-0" />
                         <h6 className="text-xs font-black uppercase text-primary tracking-widest">Key Features</h6>
                       </div>
                       <ul className="space-y-3">
