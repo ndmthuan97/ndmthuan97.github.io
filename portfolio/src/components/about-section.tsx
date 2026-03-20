@@ -3,6 +3,7 @@ import { useReveal } from "../hooks/use-reveal";
 
 interface StatItem {
   value: string;
+  suffix?: string;
   label: string;
 }
 
@@ -63,7 +64,7 @@ export function AboutSection() {
               >
                 <div>
                   <span className="text-4xl md:text-5xl font-bold text-primary">{stat.value}</span>
-                  <span className="text-primary text-2xl"></span>
+                  <span className="text-primary text-2xl">{stat.suffix}</span>
                 </div>
                 <div className="text-xs text-muted-foreground uppercase leading-tight tracking-wide max-w-16">
                   {stat.label}

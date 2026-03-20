@@ -1,16 +1,19 @@
 {
     "stats": [
         {
-            "value": "2",
+            "value": "3",
+            "suffix": "+",
             "label": "YEARS OF EXPERIENCE"
         },
         {
-            "value": "5",
+            "value": "12",
+            "suffix": "+",
             "label": "COMPLETED PROJECTS"
         },
         {
             "value": "100",
-            "label": "HAPPY CUSTOMERS"
+            "suffix": "%",
+            "label": "PERCENT DEDICATION"
         },
         {
             "value": "24/7",
